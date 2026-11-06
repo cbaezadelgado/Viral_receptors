@@ -18,7 +18,9 @@ import yaml
 from Bio import Entrez
 from alive_progress import alive_bar
 
-os.chdir('/home/qhr/virus_relations/')
+# Run from this script's directory so relative paths (scripts/, BERN2/,
+# spacy/, openie/) resolve wherever the repository is installed
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 from scripts.preprocess_abstract import parse_abstracts
 from scripts.preprocess_abstract import get_batches_abstracts
 from scripts.preprocess_abstract import get_annotated_abstracts
