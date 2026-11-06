@@ -106,7 +106,7 @@ The pipeline was developed and tested on **Ubuntu Linux with a GNOME desktop**. 
 | Dependency | Notes |
 |---|---|
 | Python **3.8** virtual env in `env/` | `run_virus_relations.sh` activates `env/bin/activate` |
-| Python packages | `pip install -r requirements.txt` **plus** `pip install alive-progress requests` |
+| Python packages | `pip install -r requirements.txt` |
 | spaCy model | `python -m spacy download en_core_web_sm` |
 | NLTK data | `python -c "import nltk; nltk.download('punkt')"` |
 | **BERN2** | Clone and install [BERN2](https://github.com/dmis-lab/BERN2) into `automated_text_mining/BERN2/`, inside a conda env named **`bern2`** (Anaconda in `~/anaconda3`). A GPU is recommended. The pipeline calls `BERN2/scripts/run_bern2.sh` (GPU) or `run_bern2_cpu.sh` (CPU). |
@@ -127,8 +127,6 @@ automated_text_mining/
 ├── extract_virus_relations.py
 └── run_virus_relations.sh
 ```
-
-> ⚠️ **Edit the hard-coded path.** Line 21 of `extract_virus_relations.py` runs `os.chdir('/home/qhr/virus_relations/')`. Change it to the absolute path of your `automated_text_mining/` folder before the first run.
 
 ---
 
@@ -290,9 +288,8 @@ Most errors came from gene mention recognition and normalisation. For example, *
 ## Known limitations
 
 - **Abstracts only**: full texts are not processed.
-- **Hard-coded paths**: `extract_virus_relations.py` (line 21, `os.chdir`) and `db_path` in `config.yaml` must point to your installation.
+- **Absolute paths in the config**: `path` and `db_path` in `config.yaml` must point to your project and database directories. The main script itself moves to its own folder at start-up, so the repository can be installed anywhere.
 - **Desktop required**: BERN2, spaCy and OpenIE are launched with `gnome-terminal`. On a headless server, replace the `scripts/launch_*.sh` wrappers with direct calls to the corresponding `scripts/open_*.sh` / `scripts/run_*.sh`.
-- `alive-progress` and `requests` are imported but missing from `requirements.txt`.
 - Recall is limited mainly by gene NER/normalisation and by relations spread over several sentences.
 
 ---
